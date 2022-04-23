@@ -18,3 +18,5 @@ ARG SATYSFI_VERSION
 ARG SATYROGRAPHOS_VERSION
 RUN opam update && opam install --yes satysfi.${SATYSFI_VERSION} satysfi-dist.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION}
 RUN opam exec -- satyrographos install
+
+ENTRYPOINT ["opam", "exec", "--"]
