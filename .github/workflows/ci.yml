@@ -34,7 +34,7 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-      - name: Build and push (Docker Hub)
+      - name: Build
         uses: docker/build-push-action@v2
         with:
           push: false
@@ -49,3 +49,7 @@ jobs:
 
       - name: Run test
         run: docker run --rm ${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ matrix.satysfi-version }} satysfi --help
+
+      - name: Push to Docker Hub
+        run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ matrix.satysfi-version }}
+        if: github.event_name != 'pull_request'
