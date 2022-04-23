@@ -48,7 +48,7 @@ jobs:
           cache-to: type=gha,mode=max,scope=${{ matrix.satysfi-version }}
 
       - name: Run test
-        run: docker run --rm ${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ matrix.satysfi-version }} satysfi --help
+        run: docker run --rm ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ matrix.satysfi-version }} satysfi --help
 
       - name: Push to Docker Hub
         run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ matrix.satysfi-version }}
