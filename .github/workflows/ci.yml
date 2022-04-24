@@ -19,8 +19,9 @@ jobs:
           - ocaml-version: 4.12.1
             satysfi-version: 0.0.7
             satyrographos-version: 0.0.2.11
+            latest: true
     env:
-      IMAGE_NAME: gitpod-satysfi
+      REPOSITORY_NAME: ${{ secrets.DOCKER_HUB_USERNAME }}/gitpod-satysfi
     steps:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -39,7 +40,7 @@ jobs:
         with:
           push: false
           load: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ matrix.satysfi-version }}
+          tags: ${{ env.REPOSITORY_NAME }}:${{ matrix.satysfi-version }}
           build-args: |
             OCAML_VERSION=${{ matrix.ocaml-version }}
             SATYSFI_VERSION=${{ matrix.satysfi-version }}
@@ -48,8 +49,14 @@ jobs:
           cache-to: type=gha,mode=max,scope=${{ matrix.satysfi-version }}
 
       - name: Run test
-        run: docker run --rm ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ matrix.satysfi-version }} satysfi --help
+        run: docker run --rm ${{ env.REPOSITORY_NAME }}:${{ matrix.satysfi-version }} satysfi --help
 
       - name: Push to Docker Hub
-        run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ matrix.satysfi-version }}
+        run: docker push ${{ env.REPOSITORY_NAME }}:${{ matrix.satysfi-version }}
         if: github.event_name != 'pull_request'
+
+      - name: Push to Docker Hub (latest)
+        run: |
+          docker tag ${{ env.REPOSITORY_NAME }}:${{ matrix.satysfi-version }} ${{ env.REPOSITORY_NAME }}:latest
+          docker push ${{ env.REPOSITORY_NAME }}:latest
+        if: github.event_name != 'pull_request' && matrix.latest
