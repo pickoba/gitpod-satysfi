@@ -1,4 +1,4 @@
-FROM gitpod/workspace-base
+FROM gitpod/workspace-rust
 
 RUN sudo install-packages opam
 
@@ -18,5 +18,8 @@ ARG SATYSFI_VERSION
 ARG SATYROGRAPHOS_VERSION
 RUN opam update && opam install --yes satysfi.${SATYSFI_VERSION} satysfi-dist.${SATYSFI_VERSION} satyrographos.${SATYROGRAPHOS_VERSION}
 RUN opam exec -- satyrographos install
+
+# install language server
+RUN cargo install --git https://github.com/monaqa/satysfi-language-server
 
 ENTRYPOINT ["opam", "exec", "--"]

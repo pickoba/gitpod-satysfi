@@ -51,6 +51,9 @@ jobs:
       - name: Run test
         run: docker run --rm ${{ env.REPOSITORY_NAME }}:${{ matrix.satysfi-version }} satysfi --help
 
+      - name: Run test (language server)
+        run: docker run --rm ${{ env.REPOSITORY_NAME }}:${{ matrix.satysfi-version }} satysfi-language-server --version
+
       - name: Push to Docker Hub
         run: docker push ${{ env.REPOSITORY_NAME }}:${{ matrix.satysfi-version }}
         if: github.event_name != 'pull_request'
