@@ -20,7 +20,9 @@ image: pickoba/gitpod-satysfi:0.0.6
 
 ## Supported versions
 
-* 0.0.8 (latest)
+* 0.0.11 (latest)
+* 0.0.10
+* 0.0.8
 * 0.0.7
 * 0.0.6
 
