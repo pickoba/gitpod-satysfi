@@ -23,9 +23,6 @@ jobs:
             satysfi-version: 0.0.8
             satyrographos-version: 0.0.2.11
           - ocaml-version: 4.14.1
-            satysfi-version: 0.0.9
-            satyrographos-version: 0.0.2.13
-          - ocaml-version: 4.14.1
             satysfi-version: 0.0.10
             satyrographos-version: 0.0.2.13
           - ocaml-version: 4.14.1
